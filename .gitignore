@@ -7,6 +7,9 @@
 *.pm.tdy
 *.bs
 
+# Config file
+.env
+
 # Devel::Cover
 cover_db/
 
@@ -15,6 +18,7 @@ nytprof.out
 
 # Dizt::Zilla
 /.build/
+/WorldCat-API-*
 
 # Module::Build
 _build/
