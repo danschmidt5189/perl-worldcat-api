@@ -6,7 +6,7 @@ package WorldCat::API;
 
 =pod
 
-=head1 Synopsis
+=head1 SYNOPSIS
 
   my $api = WorldCat::API->new(
     institution_id => "...",
@@ -18,11 +18,11 @@ package WorldCat::API;
 
   my $marc_record = $api->find_by_oclc_number("123") or die "Not Found!";
 
-=head2 Configuration
+=head2 CONFIGURATION
 
-Attributes default to using environment variables of the form "WORLDCAT_API_<upper-case-attr-name>". If testing with Docker, you can add these values to a .env file at the root of the project, then load that file when running Docker:
+Defaults are set via envrionment variables of the form "WORLDCAT_API_${ALL_CAPS_ATTR_NAME}". An easy way to set defaults (e.g. for testing) is to add them to a .env at the root of the project:
 
-  $ cat <<-EOF > .env
+  $ cat <<EOF > .env
   WORLDCAT_API_INSTITUTION_ID="..."
   WORLDCAT_API_PRINCIPLE_ID="..."
   WORLDCAT_API_PRINCIPLE_ID_NAMESPACE="..."
@@ -30,20 +30,21 @@ Attributes default to using environment variables of the form "WORLDCAT_API_<upp
   WORLDCAT_API_WSKEY="..."
   EOF
 
-=head2 Development, Builds, and Testing
+=head2 DOCKER
 
-The included Dockerfile sets you up to run Dist::Zilla, which makes basic development tasks pretty easy:
+The included Dockerfile makes it easy to develop, test, and release using Dist::Zilla. Just build the container:
 
-  $ docker build -t worldcat .
+  $ docker build -t worldcatapi .
 
-  # Develop interactively
-  $ docker run -it --entrypoint=/bin/bash --volume "$PWD:/app" worldcat
+dzil functions as the container's entrypoint, which makes it easy to build the project:
 
-  # Build the dist
-  $ docker run --volume "$PWD:/app" worldcat build
+  $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi build
+  $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi test
+  $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi clean
 
-  # Test it
-  $ docker run --volume "$PWD:/app" worldcat test
+Release and development are interactive processes. You can use Docker for that, too, by opening a persistent shell in the container:
+
+  $ docker run -it --volume="$PWD:/app" --entrypoint=/bin/bash worldcatapi
 
 =cut
 

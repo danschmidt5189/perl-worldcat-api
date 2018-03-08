@@ -1,4 +1,5 @@
 requires "Carp" => "0";
+requires "Data::Dumper" => "0";
 requires "Digest::SHA" => "0";
 requires "HTTP::Request" => "0";
 requires "HTTP::Status" => "0";
@@ -19,7 +20,6 @@ on 'test' => sub {
   requires "Test::Deep" => "0";
   requires "Test::Fatal" => "0";
   requires "Test::More" => "0";
-  requires "constant" => "0";
   requires "lib" => "0";
   requires "local::lib" => "0";
 };

@@ -1,0 +1,20 @@
+#!/usr/bin/env perl
+use strict;
+use warnings;
+use feature qw(say);
+use Data::Dumper qw(Dumper);
+use WorldCat::API;
+
+my $oclc_number = $ARGV[0] or die <<EOF
+Looks up a MARC::Record in WorldCat and dump(er)s it to STDOUT.
+
+USAGE:
+
+    find-by-oclc-number <oclc-number>
+EOF
+
+say Dumper(WorldCat::API->new->find_by_oclc_number($oclc_number));
+
+1;
+
+# PODNAME: find-by-oclc-number
