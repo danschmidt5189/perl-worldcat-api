@@ -61,8 +61,6 @@ use Readonly;
 use WorldCat::MARC::Record::Monkeypatch;
 use XML::Simple qw(XMLin);
 
-our $VERSION = 1.0000;
-
 Readonly my $DEFAULT_RETRIES => 5;
 
 sub _from_env {

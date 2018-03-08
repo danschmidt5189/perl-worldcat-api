@@ -4,7 +4,7 @@ WorldCat::API - Moo bindings for the OCLC WorldCat API
 
 # VERSION
 
-version 0.002
+version 1.001
 
 # Synopsis
 
