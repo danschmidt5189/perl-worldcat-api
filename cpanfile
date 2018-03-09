@@ -15,10 +15,14 @@ requires "strict" => "0";
 requires "warnings" => "0";
 
 on 'test' => sub {
+  requires "Config::Any" => "0";
+  requires "Exporter" => "0";
   requires "ExtUtils::MakeMaker" => "0";
   requires "File::Spec" => "0";
+  requires "Hash::Merge::Simple" => "0";
   requires "Test::Deep" => "0";
   requires "Test::Fatal" => "0";
+  requires "Test::Modern" => "0";
   requires "Test::More" => "0";
   requires "lib" => "0";
   requires "local::lib" => "0";

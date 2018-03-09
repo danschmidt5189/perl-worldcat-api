@@ -2,25 +2,44 @@ use strict;
 use warnings;
 package WorldCat::API;
 
-# ABSTRACT: Moo bindings for the OCLC WorldCat API
+# ABSTRACT: Fetch MARC::Records from OCLC's WorldCat API
 
 =pod
 
 =head1 SYNOPSIS
 
   my $api = WorldCat::API->new(
-    institution_id => "...",
-    principle_id => "...",
+    institution_id         => "...",
+    principle_id           => "...",
     principle_id_namespace => "...",
-    secret => "...",
-    wskey => "...",
+    secret                 => "...",
+    wskey                  => "...",
   );
 
   my $marc_record = $api->find_by_oclc_number("123") or die "Not Found!";
 
-=head2 CONFIGURATION
+=head1 CONTRIBUTING
 
-Defaults are set via envrionment variables of the form "WORLDCAT_API_${ALL_CAPS_ATTR_NAME}". An easy way to set defaults (e.g. for testing) is to add them to a .env at the root of the project:
+This project uses Dist::Zilla to set things up. You can run that directly or (more easily) by using Docker. For starters, create the build container:
+
+  $ docker build -t worldcatapi .
+
+The container contains Perl, cpanm, dzil, and all of the build dependencies. Shell into it to use it as a dev environment:
+
+  $ docker run --volume="$PWD:/app" --entrypoint=/bin/bash worldcatapi
+
+The "volume" flag syncs your local directory into the container, allowing you to develop interactively. That also means that if you build the app within the container, the build products will be reflected on your host machine:
+
+  $ docker run --volume="$PWD:/app" worldcatapi build
+  $ ls -l
+  …
+  WorldCat-API-1.002
+  WorldCat-API-1.002.tar.gz
+  …
+
+=head1 TESTING
+
+To test, you must set (staging!) API credentials in the container environment. An easy solution is to add them to a .env file at the root of the project, which you can load with Docker:
 
   $ cat <<EOF > .env
   WORLDCAT_API_INSTITUTION_ID="..."
@@ -29,22 +48,7 @@ Defaults are set via envrionment variables of the form "WORLDCAT_API_${ALL_CAPS_
   WORLDCAT_API_SECRET="..."
   WORLDCAT_API_WSKEY="..."
   EOF
-
-=head2 DOCKER
-
-The included Dockerfile makes it easy to develop, test, and release using Dist::Zilla. Just build the container:
-
-  $ docker build -t worldcatapi .
-
-dzil functions as the container's entrypoint, which makes it easy to build the project:
-
-  $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi build
   $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi test
-  $ docker run --volume="$PWD:/app" --env-file=.env worldcatapi clean
-
-Release and development are interactive processes. You can use Docker for that, too, by opening a persistent shell in the container:
-
-  $ docker run -it --volume="$PWD:/app" --entrypoint=/bin/bash worldcatapi
 
 =cut
 
